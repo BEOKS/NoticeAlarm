@@ -26,5 +26,5 @@
 ### 5. 레이아웃 동적 구현(예정)
 ### 6. 웹 크롤링 서버 구현
 ## 기본 설계
-### 시스템 구조
+### 1.시스템 구조
 ![image](https://user-images.githubusercontent.com/30094719/94089017-f3d4ca80-fe4c-11ea-9d0e-89ceffbe3eb5.png)
