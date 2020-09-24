@@ -29,3 +29,5 @@
 ## 기초계획서
 ### 1.시스템 구조
 ![image](https://user-images.githubusercontent.com/30094719/94089017-f3d4ca80-fe4c-11ea-9d0e-89ceffbe3eb5.png)
+### 2.어플리케이션 클래스 다이어그램
+![image](https://user-images.githubusercontent.com/30094719/94145879-1ea33b00-feae-11ea-9b33-11e9b787df8f.png)
