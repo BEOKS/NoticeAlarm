@@ -24,7 +24,8 @@
 ### 1.시스템 구조
 ![image](https://user-images.githubusercontent.com/30094719/94089017-f3d4ca80-fe4c-11ea-9d0e-89ceffbe3eb5.png)
 ### 2.어플리케이션 클래스 다이어그램
-![image](https://user-images.githubusercontent.com/30094719/94145879-1ea33b00-feae-11ea-9b33-11e9b787df8f.png)
+![image](https://user-images.githubusercontent.com/30094719/94362785-abd9d000-00f8-11eb-800b-43af7cc10c40.png)
+
 #### 1.MainActivity : 시작 시 실행화면
 ##### 필드
 + pageTabLayout : 하나의 탭에 선택한 URL페이지의 공지사항을 내부에 보여줌
