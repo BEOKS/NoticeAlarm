@@ -33,10 +33,10 @@
 ![image](https://user-images.githubusercontent.com/30094719/94145879-1ea33b00-feae-11ea-9b33-11e9b787df8f.png)
 #### 1.MainActivity : 시작 시 실행화면
 ##### 필드
- pageTabLayout : 하나의 탭에 선택한 URL페이지의 공지사항을 내부에 보여줌
-floatingActionButton : 버튼 클릭시 현재 선택한 카테고리에 새로운 URL을 추가하도록하는 URLDialog를 호출
-trashButton : 클릭하면 현재 표시된 카테고리를 삭제하는 AlertDialog를 호출
-bottomAppbar : 액티비티의 아랫부분에 위치한 메뉴창
++pageTabLayout : 하나의 탭에 선택한 URL페이지의 공지사항을 내부에 보여줌
++floatingActionButton : 버튼 클릭시 현재 선택한 카테고리에 새로운 URL을 추가하도록하는 URLDialog를 호출
++trashButton : 클릭하면 현재 표시된 카테고리를 삭제하는 AlertDialog를 호출
++bottomAppbar : 액티비티의 아랫부분에 위치한 메뉴창
 ##### 메서드
 settingView() : 액티비티 시작 시 SharedPreference에서 데이터를 가져와 모든 뷰를 초기설정함
 #### 2.PageTabLayout : 공지사항을 보여줄 탭 레이아웃 (extends TabLayout)
@@ -62,4 +62,5 @@ setNavigationButton() : 네비게이션 버튼을 클릭하면 BottomDrawer가 �
 - database: FirebaseDatabase : 파이어베이스 인스턴스
 ##### 메서드
 +addAlarm(String,Fragment) : bool : 파이어베이스에 새로운 URL을 추가하고 스냅샷에 Fragment를 입력하여 DB 데이터가 변경될 경우 Fragment데이터도 변경함
+
 +deleteAlarm(String) : bool : 파이어베이스 URL부분에서 user의 token 삭제함, User/URL에 더 이상 user가 없을 경우 해당 URL또한 삭제함
