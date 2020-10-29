@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
-
+//TODO 메인 액티비티 상세화
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
