@@ -3,6 +3,7 @@ package com.example.noticealarm;
 
 
 import android.util.Log;
+import android.webkit.URLUtil;
 
 import java.util.ArrayList;
 public class URLData {
@@ -47,13 +48,16 @@ public class URLData {
      }
      public static final int URL_NOT_CORRECT=3;
      /**
+      * URL이 타당하지 않은 형식이면 URL_NOT_CORRECT반환하
       * 데이터 추가시 성공하면 ADD_SUCCESS반환하지만 urlname이나 urlAddress가 중복되면 ALERADY_EXIST를 반환
-      *
       * @param urlName
       * @param urlAddress
       * @param categoryName
       */
      public static int addNewURL(String urlName,String urlAddress,String categoryName){
+          if(!URLUtil.isValidUrl(urlAddress)){
+               return URL_NOT_CORRECT;
+          }
           for(Data data:urlDataList){
                if(data.urlName.equals(urlName)||data.urlAddress.equals("urlAddress")){
                     return ALREADY_EXIST;
@@ -71,6 +75,7 @@ public class URLData {
                     return;
                }
           }
+          onDataChanged();
      }
 }
 class Data{

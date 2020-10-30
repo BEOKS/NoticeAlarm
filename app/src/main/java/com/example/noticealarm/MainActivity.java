@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addNewCategoryButton=(AddNewCategoryButton)findViewById(R.id.addNewCategoryButton);
         addNewCategoryButton.mainActivity=this;
-        trashButton=(TrashButton)findViewById(R.id.trashButton2);
 
     }
 }
