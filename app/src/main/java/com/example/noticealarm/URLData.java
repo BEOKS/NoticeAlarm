@@ -2,10 +2,19 @@ package com.example.noticealarm;
 //TODO URL데이터 상세화 하기
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.webkit.URLUtil;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+
+/**
+ * 사용을 위해서는 mainActivity의 값을 설정해주어야한다.
+ */
 public class URLData {
      interface DataChangeListener{
           public void onDataChange(ArrayList<Data> urlDataList,ArrayList<String> categoryNameList);
@@ -14,11 +23,29 @@ public class URLData {
      public static ArrayList<String> categoryNameList=new ArrayList<String>();
      private static ArrayList<DataChangeListener> dataChangeListenerArrayList=new ArrayList<DataChangeListener>();
 
-     public static void getDataFromInternalStorage(){
+     private static String urlDataListFileName="urlDataList",categoryNameListFileName="categoryNameList";
+     public static MainActivity mainActivity;
+     public static void getDataFromSharedPreference(){
+          SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("Data",Context.MODE_PRIVATE);
+          String json=sharedPreferences.getString(urlDataListFileName,"");
+          if(!json.equals("")){
+               Gson gson=new Gson();
+               urlDataList=gson.fromJson(json,new TypeToken<ArrayList<Data>>(){}.getType());
+          }
+          json=sharedPreferences.getString(categoryNameListFileName,"");
+          if(!json.equals("")){
+               Gson gson=new Gson();
+               categoryNameList=gson.fromJson(json,new TypeToken<ArrayList<String>>(){}.getType());
+          }
 
      }
-     public static void updateDataToInternalStorage(){
-
+     public static void updateDataToSharedPreference(){
+          SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("Data",Context.MODE_PRIVATE);
+          SharedPreferences.Editor editor=sharedPreferences.edit();
+          Gson gson=new Gson();
+          editor.putString(urlDataListFileName,gson.toJson(urlDataList));
+          editor.putString(categoryNameListFileName,gson.toJson(categoryNameList));
+          editor.commit();
      }
      public static void addDataChangeListener(DataChangeListener dataChangeListener){
           dataChangeListenerArrayList.add(dataChangeListener);
@@ -27,7 +54,7 @@ public class URLData {
           for(DataChangeListener dataChangeListener:dataChangeListenerArrayList){
                dataChangeListener.onDataChange(urlDataList,categoryNameList);
           }
-          updateDataToInternalStorage();
+          updateDataToSharedPreference();
      }
      public static final int ALREADY_EXIST=0,ADD_SUCCESS=1;
      /**
