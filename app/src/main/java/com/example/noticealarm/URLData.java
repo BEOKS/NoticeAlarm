@@ -15,7 +15,7 @@ public class URLData {
      private static ArrayList<DataChangeListener> dataChangeListenerArrayList=new ArrayList<DataChangeListener>();
 
      public static void getDataFromInternalStorage(){
-          //TODO 초기에 데이터를 내부 저장소에서 불러오기
+
      }
      public static void updateUrlDataToInternalStorage(){
 
