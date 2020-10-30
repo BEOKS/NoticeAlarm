@@ -15,21 +15,11 @@ public class MainActivity extends AppCompatActivity {
     public DataShowTabLayout dataShowTabLayout;
     public TrashButton trashButton;
     @Override
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addNewCategoryButton=(AddNewCategoryButton)findViewById(R.id.addNewCategoryButton);
         addNewCategoryButton.mainActivity=this;
-        trashButton=(TrashButton)findViewById(R.id.trashButton);
-        trashButton.mainActivity=this;
-        CategoryBottomDialog categoryBottomDialog = new CategoryBottomDialog(this);
-
-
 
     }
-
-
-
 }
