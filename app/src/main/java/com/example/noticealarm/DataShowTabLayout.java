@@ -21,4 +21,8 @@ public class DataShowTabLayout extends TabLayout {
     public DataShowTabLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
+    public void setCategory(String categoryName){
+
+    }
 }

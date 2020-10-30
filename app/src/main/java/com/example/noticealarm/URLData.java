@@ -1,5 +1,5 @@
 package com.example.noticealarm;
-//TODO URL데이터 상세화 하기
+//TODO 파이어 베이스와 연결 필요
 
 
 import android.content.Context;
