@@ -9,10 +9,19 @@ import android.os.Bundle;
 
 //TODO 메인 액티비티 상세화
 public class MainActivity extends AppCompatActivity {
+    public AddNewCategoryButton addNewCategoryButton;
+    public AddNewCategoryDialog addNewCategoryDialog;
+    public CategoryBottomDialog categoryBottomDialog;
+    public CustomBottomAppBar customBottomAppBar;
+    public DataShowTabLayout dataShowTabLayout;
+    public TrashButton trashButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addNewCategoryButton=(AddNewCategoryButton)findViewById(R.id.addNewCategoryButton);
+        addNewCategoryButton.mainActivity=this;
+        trashButton=(TrashButton)findViewById(R.id.trashButton2);
 
     }
 }

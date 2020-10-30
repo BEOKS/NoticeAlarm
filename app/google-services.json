@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "200735075499",
+    "firebase_url": "https://noticealarm-122b4.firebaseio.com",
+    "project_id": "noticealarm-122b4",
+    "storage_bucket": "noticealarm-122b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200735075499:android:adc58bd9d4857800c99bee",
+        "android_client_info": {
+          "package_name": "com.example.noticealarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200735075499-2igt6fe78h7vtri0mk7oj2m3csgf63sr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.noticealarm",
+            "certificate_hash": "645ed837846902cc735dc5e0fa265d36add5a8a0"
+          }
+        },
+        {
+          "client_id": "200735075499-4tkmbp8valteprkdrmtg14eb6549shpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqW0aCR_p9zzierL37uYZzFQ6yW3VoIoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200735075499-4tkmbp8valteprkdrmtg14eb6549shpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
