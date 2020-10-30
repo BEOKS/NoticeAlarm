@@ -17,7 +17,7 @@ public class URLData {
      public static void getDataFromInternalStorage(){
 
      }
-     public static void updateUrlDataToInternalStorage(){
+     public static void updateDataToInternalStorage(){
 
      }
      public static void addDataChangeListener(DataChangeListener dataChangeListener){
@@ -27,6 +27,7 @@ public class URLData {
           for(DataChangeListener dataChangeListener:dataChangeListenerArrayList){
                dataChangeListener.onDataChange(urlDataList,categoryNameList);
           }
+          updateDataToInternalStorage();
      }
      public static final int ALREADY_EXIST=0,ADD_SUCCESS=1;
      /**
