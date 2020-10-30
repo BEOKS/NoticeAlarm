@@ -3,6 +3,6 @@ package com.example.noticealarm;
 
 public class URLData {
      public static void getDataFromInternalStorage(){
-
+          //TODO 초기에 데이터를 내부 저장소에서 불러오기
      }
 }
