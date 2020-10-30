@@ -1,10 +1,14 @@
 package com.example.noticealarm;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //TODO 카테고리 추가 버튼 상세화
@@ -25,6 +29,30 @@ public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatBut
     @Override
     public void onClick(View v) {
         //카테고리 추가 Dialog 실행
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity.getApplicationContext());
+        final EditText EditCategoryName = new EditText(mainActivity.getApplicationContext());
+
+        builder.setTitle("카테고리 이름을 입력해주세요").setView(EditCategoryName);
+
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        String CategoryName = EditCategoryName.getText().toString();
+                        URLData.addNewCategory(CategoryName);
+
+                    }
+                });
+
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
 
     }
 }
