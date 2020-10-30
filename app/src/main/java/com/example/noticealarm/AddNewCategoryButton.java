@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 /**
  * 1. 새로운 카테고리를 추가하기 위한 다이얼로그 생성
- * 2. 다이얼로그에서 카테고리 이름을 받고 확인 버튼을 누르면 URLData.addNewCategory(String catgoryName) 호출
+ * 2. 다이얼로그에서 확인 버튼을 누르면 URLData.addNewCategory(String catgoryName) 호출
  * 3. 취소를 누르면 다이얼로그 닫기
  */
 public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
