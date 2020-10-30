@@ -148,6 +148,15 @@ public class URLData {
           }
           onDataChanged();
      }
+     public static ArrayList<Data>  getURLinCategory(String categoryName){
+          ArrayList<Data> arrayList=new ArrayList<Data>();
+          for(Data data:urlDataList){
+               if(data.categoryName.equals(categoryName)){
+                    arrayList.add(data);
+               }
+          }
+          return arrayList;
+     }
 }
 class Data{
      String urlName,urlAddress,categoryName=null,htmlData=null;
