@@ -1,6 +1,8 @@
 package com.example.noticealarm;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import android.widget.Button;
 
 public class TrashButton extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
 
+    MainActivity mainActivity;
     public TrashButton(Context context, AttributeSet attr) {
         super(context,attr);
         setOnClickListener(this);
@@ -24,6 +27,31 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
 
     @Override
     public void onClick(View v) {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        final String SelCategoryName = mainActivity.categoryBottomDialog.selectedCategoryname;
+
+        builder.setTitle(SelCategoryName + "를(을) 삭제 하시겠습니까?");
+
+        builder.setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        URLData.removeCategory(SelCategoryName);
+
+                    }
+                });
+
+        builder.setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
 
     }
 }

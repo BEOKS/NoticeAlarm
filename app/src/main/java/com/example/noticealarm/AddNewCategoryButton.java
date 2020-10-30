@@ -29,9 +29,9 @@ public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatBut
     @Override
     public void onClick(View v) {
         //카테고리 추가 Dialog 실행
-        Toast.makeText(mainActivity.getApplicationContext(),"pressed",Toast.LENGTH_LONG).show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity.getApplicationContext());
-        final EditText EditCategoryName = new EditText(mainActivity.getApplicationContext());
+       Toast.makeText(this.getContext(),"pressed",Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        final EditText EditCategoryName = new EditText(this.getContext());
 
         builder.setTitle("카테고리 이름을 입력해주세요").setView(EditCategoryName);
 
@@ -52,7 +52,8 @@ public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatBut
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
-                });
+                })
+                .show();
 
     }
 }
