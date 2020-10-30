@@ -11,7 +11,7 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
         super(context,attr);
         setOnClickListener(this);
     }
-
+//aa
     public TrashButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
