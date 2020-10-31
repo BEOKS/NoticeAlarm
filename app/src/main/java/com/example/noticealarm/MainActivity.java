@@ -18,8 +18,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
         addNewCategoryButton=(AddNewCategoryButton)findViewById(R.id.addNewCategoryButton);
         addNewCategoryButton.mainActivity=this;
 
+        URLData.addNewURL("컴퓨터학부","http://computer.knu.ac.kr/06_sub/02_sub.html","");
+
+    }
+    public void init(){
+        URLData.mainActivity=this;
     }
 }

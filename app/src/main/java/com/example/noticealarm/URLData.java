@@ -25,6 +25,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 사용을 위해서는 mainActivity의 값을 설정해주어야한다.
@@ -133,8 +134,14 @@ public class URLData {
                     return ALREADY_EXIST;
                }
           }
-          new HtmlDataDownloader().execute(urlAddress);
-          Data data=new Data(urlName,urlAddress,categoryName,HtmlDataDownloader.text);
+          Data data= null;
+          try {
+               data = new Data(urlName,urlAddress,categoryName,new HtmlDataDownloader().execute(urlAddress).get());
+          } catch (ExecutionException e) {
+               e.printStackTrace();
+          } catch (InterruptedException e) {
+               e.printStackTrace();
+          }
           urlDataList.add(data);
           onDataChanged();
           return ADD_SUCCESS;
@@ -175,7 +182,7 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
                Document doc = Jsoup.connect(strings[0]).get();
                Elements contents = doc.getElementsByTag("table");
-               text = contents.text();
+               text = contents.html();
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
