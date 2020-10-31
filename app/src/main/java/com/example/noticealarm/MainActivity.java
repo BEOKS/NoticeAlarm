@@ -7,6 +7,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 //TODO 메인 액티비티 상세화
 public class MainActivity extends AppCompatActivity {
     public AddNewCategoryButton addNewCategoryButton;
@@ -23,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         addNewCategoryButton.mainActivity=this;
 
         URLData.addNewURL("컴퓨터학부","http://computer.knu.ac.kr/06_sub/02_sub.html","");
-
     }
     public void init(){
-        URLData.mainActivity=this;
+        URLData.init(this);
     }
 }

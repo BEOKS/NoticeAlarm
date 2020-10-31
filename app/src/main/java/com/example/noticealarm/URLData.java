@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.webkit.URLUtil;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,33 +41,30 @@ public class URLData {
      private static ArrayList<DataChangeListener> dataChangeListenerArrayList=new ArrayList<DataChangeListener>();
 
      private static String urlDataListFileName="urlDataList",categoryNameListFileName="categoryNameList";
-     public static void init(){
-          FirebaseDatabase.getInstance().getReference("URL_DATA").addChildEventListener(new ChildEventListener() {
-               @Override
-               public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+     public static void init(MainActivity mainActivity){
+          URLData.getDataFromSharedPreference();
+          for(int i=0;i<urlDataList.size();i++){
+               final int index=i;
+               FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlDataList.get(index).urlAddress)).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                         try {
+                              urlDataList.get(index).htmlData=new HtmlDataDownloader().execute(urlDataList.get(index).urlAddress).get();
+                              URLData.onDataChanged();
+                         }
+                         catch (ExecutionException e) {
+                              e.printStackTrace();
+                         } catch (InterruptedException e) {
+                              e.printStackTrace();
+                         }
+                    }
 
-               }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-               @Override
-               public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-               }
-
-               @Override
-               public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-               }
-
-               @Override
-               public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-               }
-
-               @Override
-               public void onCancelled(@NonNull DatabaseError databaseError) {
-
-               }
-          });
+                    }
+               });
+          }
      }
      public static MainActivity mainActivity;
      public static void getDataFromSharedPreference(){
@@ -119,13 +118,16 @@ public class URLData {
      }
      public static final int URL_NOT_CORRECT=3;
      /**
-      * URL이 타당하지 않은 형식이면 URL_NOT_CORRECT반환하
+      * URL이 타당하지 않은 형식이면 URL_NOT_CORRECT반환
+      * 파이어베이스에 해당 URL을 검색
+      *   없으면 value를 0으로하고 key를 url을 변환한 스트링을 입력
+      *   있으면 value++을 함
       * 데이터 추가시 성공하면 ADD_SUCCESS반환하지만 urlname이나 urlAddress가 중복되면 ALERADY_EXIST를 반환
       * @param urlName
       * @param urlAddress
       * @param categoryName
       */
-     public static int addNewURL(String urlName,String urlAddress,String categoryName){
+     public static int addNewURL(String urlName, final String urlAddress, String categoryName){
           if(!URLUtil.isValidUrl(urlAddress)){
                return URL_NOT_CORRECT;
           }
@@ -134,6 +136,19 @@ public class URLData {
                     return ALREADY_EXIST;
                }
           }
+          FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()+1);
+                    }
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError databaseError) {
+
+               }
+          });
           Data data= null;
           try {
                data = new Data(urlName,urlAddress,categoryName,new HtmlDataDownloader().execute(urlAddress).get());
@@ -146,19 +161,39 @@ public class URLData {
           onDataChanged();
           return ADD_SUCCESS;
      }
+
+     /**
+      * url을 내부 리스트에서 삭제함
+      * 파이어베이스 데이터베이스에서 해당 URL에 대해 value--을 진행
+      * @param urlName
+      */
      public static void removeURL(String urlName){
           for(Data data:urlDataList){
                if(data.urlName==urlName){
                     urlDataList.remove(data);
+                    final String urlAddress=data.urlAddress;
+                    FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                              if(dataSnapshot.exists()){
+                                   FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()-1);
+                              }
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                         }
+                    });
                     return;
                }
           }
           onDataChanged();
      }
-     public static ArrayList<Data>  getURLinCategory(String categoryName){
-          ArrayList<Data> arrayList=new ArrayList<Data>();
-          for(Data data:urlDataList){
-               if(data.categoryName.equals(categoryName)){
+     public static ArrayList<Data>  getURLinCategory(String categoryName) {
+          ArrayList<Data> arrayList = new ArrayList<Data>();
+          for (Data data : urlDataList) {
+               if (data.categoryName.equals(categoryName)) {
                     arrayList.add(data);
                }
           }
@@ -173,6 +208,12 @@ class Data{
           this.categoryName = categoryName;
           this.htmlData=htmlData;
      }
+     public static String parseURLtoDatabaseKey(String urlAddress){
+          return urlAddress.replace('.','_');
+     }
+     public static String parseDatabaseKeyToURL(String urlAddress){
+          return urlAddress.replace('_','.');
+     }
 }
 class HtmlDataDownloader extends AsyncTask<String,Void,String> {
      public static String text=null;
@@ -186,7 +227,7 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
-
+               Toast.makeText(URLData.mainActivity.getApplicationContext(),"인터넷에 연결할 수 없습니다",Toast.LENGTH_SHORT).show();
                e.printStackTrace();
 
           }
