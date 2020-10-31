@@ -2,12 +2,13 @@ package com.example.noticealarm.URLDataShow;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * 이건 제가 할게요!
@@ -16,12 +17,19 @@ import androidx.viewpager2.widget.ViewPager2;
  * 2. 데이터를 탭레이아웃내부에 삽입
  */
 public class DataShowViewPager extends ViewPager {
-
+    private TabLayout tabLayout;
     public DataShowViewPager(@NonNull Context context) {
         super(context);
+        setData(context);
     }
 
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setData(context);
+    }
+    public void setData(Context context){
+        tabLayout=new TabLayout(context);
+        tabLayout.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        addView(tabLayout);
     }
 }
