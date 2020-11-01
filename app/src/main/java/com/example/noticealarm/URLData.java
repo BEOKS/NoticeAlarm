@@ -5,14 +5,11 @@ package com.example.noticealarm;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,6 +39,7 @@ public class URLData {
 
      private static String urlDataListFileName="urlDataList",categoryNameListFileName="categoryNameList";
      public static void init(MainActivity mainActivity){
+          activity=mainActivity;
           URLData.getDataFromSharedPreference();
           for(int i=0;i<urlDataList.size();i++){
                final int index=i;
@@ -66,9 +64,9 @@ public class URLData {
                });
           }
      }
-     public static MainActivity mainActivity;
+     public static MainActivity activity;
      public static void getDataFromSharedPreference(){
-          SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("Data",Context.MODE_PRIVATE);
+          SharedPreferences sharedPreferences= activity.getSharedPreferences("Data",Context.MODE_PRIVATE);
           String json=sharedPreferences.getString(urlDataListFileName,"");
           if(!json.equals("")){
                Gson gson=new Gson();
@@ -82,7 +80,7 @@ public class URLData {
 
      }
      public static void updateDataToSharedPreference(){
-          SharedPreferences sharedPreferences=mainActivity.getSharedPreferences("Data",Context.MODE_PRIVATE);
+          SharedPreferences sharedPreferences= activity.getSharedPreferences("Data",Context.MODE_PRIVATE);
           SharedPreferences.Editor editor=sharedPreferences.edit();
           Gson gson=new Gson();
           editor.putString(urlDataListFileName,gson.toJson(urlDataList));
@@ -191,6 +189,9 @@ public class URLData {
           onDataChanged();
      }
      public static ArrayList<Data>  getURLinCategory(String categoryName) {
+          if(categoryName.equals("")){
+               return urlDataList;
+          }
           ArrayList<Data> arrayList = new ArrayList<Data>();
           for (Data data : urlDataList) {
                if (data.categoryName.equals(categoryName)) {
@@ -223,11 +224,11 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
                Document doc = Jsoup.connect(strings[0]).get();
                Elements contents = doc.getElementsByTag("table");
-               text = contents.html();
+               text = contents.toString();
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
-               Toast.makeText(URLData.mainActivity.getApplicationContext(),"인터넷에 연결할 수 없습니다",Toast.LENGTH_SHORT).show();
+               Toast.makeText(URLData.activity.getApplicationContext(),"인터넷에 연결할 수 없습니다",Toast.LENGTH_SHORT).show();
                e.printStackTrace();
 
           }

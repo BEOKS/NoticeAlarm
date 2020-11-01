@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
  * 2. DatashowTabLayout.setCategory(String categoryName)를 호출
  */
 public class CategoryBottomDialog extends BottomSheetDialog {
-    public String selectedCategoryname=null;
+    public String selectedCategoryname="";
 
     public CategoryBottomDialog(@NonNull Context context) {
         super(context);
