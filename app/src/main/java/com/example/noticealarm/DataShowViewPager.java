@@ -23,7 +23,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 
 /**
- * 이건 제가 할게요!
+ * 완성!
  * setCategory(String categoryName)이 호출되면 그에 따라서 데이터를 변경함
  * 1. URLData 클래스에서 데이터를 다운받음
  * 2. 데이터를 탭레이아웃내부에 삽입
