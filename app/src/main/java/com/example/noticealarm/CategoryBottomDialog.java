@@ -2,10 +2,20 @@ package com.example.noticealarm;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 //TODO 카테고리 다이얼로그 상세화
 
 /**
@@ -16,10 +26,28 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
  * 2. DatashowTabLayout.setCategory(String categoryName)를 호출
  */
 public class CategoryBottomDialog extends BottomSheetDialog {
-    public String selectedCategoryname="";
+    public String selectedCategoryname="모든 카테고";
+    private LinearLayout categoryLinearLayout;
+    private AddNewCategoryButton addNewCategoryButton;
+    private TrashButton trashButton;
+    private ArrayList<String> categoryArrayList;
 
-    public CategoryBottomDialog(@NonNull Context context) {
+    public CategoryBottomDialog(@NonNull Context context,MainActivity mainActivity) {
         super(context);
+        categoryArrayList=URLData.categoryNameList;
+        setContentView(R.layout.bottom_sheet_dialog_layout);
+        categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
+        for(String category : categoryArrayList){
+            TextView textView=new TextView(context);
+            textView.setText(category);
+            categoryLinearLayout.addView(textView);
+        }
+
+
+        addNewCategoryButton=(AddNewCategoryButton)findViewById(R.id.addNewCategoryButton);
+        addNewCategoryButton.mainActivity=mainActivity;
+        trashButton=(TrashButton)findViewById(R.id.trashButton);
+        trashButton.mainActivity=mainActivity;
     }
 
     public CategoryBottomDialog(@NonNull Context context, int theme) {
@@ -30,3 +58,4 @@ public class CategoryBottomDialog extends BottomSheetDialog {
         super(context, cancelable, cancelListener);
     }
 }
+

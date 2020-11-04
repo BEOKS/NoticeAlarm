@@ -35,7 +35,7 @@ public class CustomBottomAppBar extends BottomAppBar {
         setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryBottomDialog categoryBottomDialog=new CategoryBottomDialog(getContext());
+                CategoryBottomDialog categoryBottomDialog=new CategoryBottomDialog(getContext(),mainActivity);
                 categoryBottomDialog.show();
             }
         });

@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void init(){
         URLData.init(this);
-
-        categoryBottomDialog=new CategoryBottomDialog(getApplicationContext());
+        URLData.addNewCategory("모든 공지사항");
 
     }
 }
