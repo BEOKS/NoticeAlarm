@@ -21,29 +21,30 @@ public class MainActivity extends AppCompatActivity {
     public DataShowViewPager dataShowViewPager;
     public FloatingActionButton floatingActionButton;
     public TextView categoryNameTextView;
+    public MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        URLData.init(this);
+        URLData.addNewCategory("모든 공지사항");
         setContentView(R.layout.activity_main);
         init();
-
+        mainActivity=this;
 
 
     }
+    private LinearLayout linearLayout;
     public void init(){
-        URLData.init(this);
-        URLData.addNewCategory("모든 공지사항");
 
         customBottomAppBar=(CustomBottomAppBar)findViewById(R.id.customBottomAppBar);
         customBottomAppBar.mainActivity=this;
         dataShowViewPager=(DataShowViewPager)findViewById(R.id.viewPager);
-        dataShowViewPager.setData("");
         floatingActionButton=(FloatingActionButton)findViewById(R.id.floattingActionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                final LinearLayout linearLayout=new LinearLayout(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+                linearLayout=new LinearLayout(getApplicationContext());
                 getLayoutInflater().inflate(R.layout.add_new_url_dialog,linearLayout,true);
                 builder.setTitle("새로운 URL추가하기").setView(linearLayout);
 
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String urlName=((TextView)findViewById(R.id.addUrl_name)).getText().toString();
-                                String urlAddress=((TextView)findViewById(R.id.addUrl_address)).getText().toString();
+                                String urlName=((TextView)linearLayout.findViewById(R.id.addUrl_name)).getText().toString();
+                                String urlAddress=((TextView)linearLayout.findViewById(R.id.addUrl_address)).getText().toString();
                                 URLData.addNewURL(urlName,urlAddress,categoryNameTextView.getText().toString());
                             }
                         });

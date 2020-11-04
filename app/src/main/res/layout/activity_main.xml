@@ -14,21 +14,11 @@
         android:text="모든 카테고리"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_marginTop="48dp"
+    <com.example.noticealarm.DataShowViewPager
+        android:id="@+id/viewPager"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="100dp">
-
-        <!-- Scrollable content -->
-
-
-        <com.example.noticealarm.DataShowViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="wrap_content" />
 
     <com.example.noticealarm.CustomBottomAppBar
         android:id="@+id/customBottomAppBar"

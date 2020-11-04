@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,14 +31,23 @@ import java.util.ArrayList;
  */
 public class DataShowViewPager extends LinearLayout {
     private TabLayout tabLayout;
+    private String categoryName;
     public DataShowViewPager(@NonNull Context context) {
         super(context);
     }
 
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        categoryName="";
+        URLData.addDataChangeListener(new URLData.DataChangeListener() {
+            @Override
+            public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
+                setData(categoryName);
+            }
+        });
     }
     public void setData(String categoryName){
+        this.categoryName=categoryName;
         //탭 레이아웃 세팅
         setOrientation(LinearLayout.VERTICAL);
         tabLayout=new TabLayout(getContext());
@@ -62,7 +72,15 @@ class DataShowPagerAdapter extends PagerAdapter {
         WebView webView=new WebView(container.getContext());
         webView.loadDataWithBaseURL(data.get(position).urlAddress,data.get(position).htmlData,"text/html","UTF-8",null);
         container.addView(webView);
+        TextView textView=new TextView(container.getContext());
+        textView.setText("asdfasdf");
+        container.addView(textView);
         return webView;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        ((ViewPager) container).removeView((View) object);
     }
 
     @Override
