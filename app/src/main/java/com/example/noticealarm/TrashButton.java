@@ -30,7 +30,7 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-        final String SelCategoryName = mainActivity.categoryBottomDialog.selectedCategoryname;
+        final String SelCategoryName = mainActivity.categoryNameTextView.getText().toString();
 
         builder.setTitle(SelCategoryName + "를(을) 삭제 하시겠습니까?");
 

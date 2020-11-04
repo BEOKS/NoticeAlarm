@@ -1,24 +1,32 @@
 package com.example.noticealarm;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //TODO 메인 액티비티 상세화
 public class MainActivity extends AppCompatActivity {
-    public AddNewCategoryButton addNewCategoryButton;
-    public CategoryBottomDialog categoryBottomDialog;
     public CustomBottomAppBar customBottomAppBar;
     public DataShowViewPager dataShowViewPager;
-    public TrashButton trashButton;
+    public FloatingActionButton floatingActionButton;
+    public TextView categoryNameTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        customBottomAppBar=(CustomBottomAppBar)findViewById(R.id.customBottomAppBar);
-        customBottomAppBar.mainActivity=this;
+
 
 
     }
@@ -26,5 +34,39 @@ public class MainActivity extends AppCompatActivity {
         URLData.init(this);
         URLData.addNewCategory("모든 공지사항");
 
+        customBottomAppBar=(CustomBottomAppBar)findViewById(R.id.customBottomAppBar);
+        customBottomAppBar.mainActivity=this;
+        dataShowViewPager=(DataShowViewPager)findViewById(R.id.viewPager);
+        dataShowViewPager.setData("");
+        floatingActionButton=(FloatingActionButton)findViewById(R.id.floattingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                final LinearLayout linearLayout=new LinearLayout(getApplicationContext());
+                getLayoutInflater().inflate(R.layout.add_new_url_dialog,linearLayout,true);
+                builder.setTitle("새로운 URL추가하기").setView(linearLayout);
+
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String urlName=((TextView)findViewById(R.id.addUrl_name)).getText().toString();
+                                String urlAddress=((TextView)findViewById(R.id.addUrl_address)).getText().toString();
+                                URLData.addNewURL(urlName,urlAddress,categoryNameTextView.getText().toString());
+                            }
+                        });
+
+                builder.setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+            }
+        });
+        categoryNameTextView=(TextView)findViewById(R.id.categoryNameTextView);
     }
 }

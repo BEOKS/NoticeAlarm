@@ -31,15 +31,26 @@ public class CategoryBottomDialog extends BottomSheetDialog {
     private AddNewCategoryButton addNewCategoryButton;
     private TrashButton trashButton;
     private ArrayList<String> categoryArrayList;
+    public  MainActivity mainActivity;
 
-    public CategoryBottomDialog(@NonNull Context context,MainActivity mainActivity) {
+    public CategoryBottomDialog(@NonNull Context context, MainActivity mainActivity1) {
         super(context);
+        this.mainActivity=mainActivity1;
         categoryArrayList=URLData.categoryNameList;
         setContentView(R.layout.bottom_sheet_dialog_layout);
         categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
         for(String category : categoryArrayList){
             TextView textView=new TextView(context);
             textView.setText(category);
+            final String copy=category;
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedCategoryname=copy;
+                    mainActivity.dataShowViewPager.setData(selectedCategoryname);
+                    mainActivity.categoryNameTextView.setText(selectedCategoryname);
+                }
+            });
             categoryLinearLayout.addView(textView);
         }
 
