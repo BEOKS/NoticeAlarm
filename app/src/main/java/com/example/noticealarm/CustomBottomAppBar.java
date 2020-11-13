@@ -24,6 +24,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
  */
 public class CustomBottomAppBar extends BottomAppBar {
     MainActivity mainActivity;
+    URLDeleteActivity urlDeleteActivity;
     public CustomBottomAppBar(@NonNull Context context) {
         super(context);
 
@@ -49,7 +50,7 @@ public class CustomBottomAppBar extends BottomAppBar {
             public void onClick(View v) {
                 Intent intent=new Intent(mainActivity,URLDeleteActivity.class);
                 intent.putExtra("category",mainActivity.categoryNameTextView.getText().toString());
-                mainActivity.startActivity(intent);
+                urlDeleteActivity.startActivity(intent);
             }
         });
         linearLayout.addView(button);

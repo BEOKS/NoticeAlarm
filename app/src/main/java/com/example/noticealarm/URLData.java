@@ -3,6 +3,7 @@ package com.example.noticealarm;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.webkit.URLUtil;
@@ -30,12 +31,16 @@ import java.util.concurrent.ExecutionException;
  * 사용을 위해서는 mainActivity의 값을 설정해주어야한다.
  */
 public class URLData {
+
+     public static Context mContext;
+
      interface DataChangeListener{
           public void onDataChange(ArrayList<Data> urlDataList,ArrayList<String> categoryNameList);
      }
      public static ArrayList<Data> urlDataList=new ArrayList<Data>();
      public static ArrayList<String> categoryNameList=new ArrayList<String>();
      private static ArrayList<DataChangeListener> dataChangeListenerArrayList=new ArrayList<DataChangeListener>();
+     URLDeleteActivity urlDeleteActivity;
 
      private static String urlDataListFileName="urlDataList",categoryNameListFileName="categoryNameList";
      public static void init(MainActivity mainActivity){
@@ -188,7 +193,7 @@ public class URLData {
           }
           onDataChanged();
      }
-     public static ArrayList<Data>  getURLinCategory(String categoryName) {
+     public static ArrayList<Data> getURLinCategory(String categoryName) {
           if(categoryName.equals("")){
                return urlDataList;
           }
@@ -198,6 +203,11 @@ public class URLData {
                     arrayList.add(data);
                }
           }
+          arrayList.add(new Data("item 1"));
+          arrayList.add(new Data("item 2"));
+          arrayList.add(new Data("item 3"));
+          arrayList.add(new Data("item 4"));
+          arrayList.add(new Data("item 5"));
           return arrayList;
      }
 }
@@ -209,12 +219,22 @@ class Data{
           this.categoryName = categoryName;
           this.htmlData=htmlData;
      }
+
+     public Data(String urlName) {
+          this.urlName = urlName;
+     }
+
      public static String parseURLtoDatabaseKey(String urlAddress){
           return urlAddress.replace('.','_');
      }
      public static String parseDatabaseKeyToURL(String urlAddress){
           return urlAddress.replace('_','.');
      }
+     public String getUrlName()
+     {
+          return this.urlName;
+     }
+
 }
 class HtmlDataDownloader extends AsyncTask<String,Void,String> {
      public static String text=null;
