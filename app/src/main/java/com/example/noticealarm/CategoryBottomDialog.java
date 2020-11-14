@@ -35,7 +35,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
 
     public CategoryBottomDialog(@NonNull Context context, MainActivity mainActivity1) {
         super(context);
-        this.mainActivity=mainActivity1;
+        mainActivity=((MainActivity)context);
         categoryArrayList=URLData.categoryNameList;
         setContentView(R.layout.bottom_sheet_dialog_layout);
         categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
@@ -63,10 +63,12 @@ public class CategoryBottomDialog extends BottomSheetDialog {
 
     public CategoryBottomDialog(@NonNull Context context, int theme) {
         super(context, theme);
+        mainActivity=((MainActivity)context);
     }
 
     protected CategoryBottomDialog(@NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+        mainActivity=((MainActivity)context);
     }
 }
 

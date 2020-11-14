@@ -26,11 +26,12 @@ public class CustomBottomAppBar extends BottomAppBar {
     MainActivity mainActivity;
     public CustomBottomAppBar(@NonNull Context context) {
         super(context);
-
+        mainActivity=((MainActivity)context);
     }
 
     public CustomBottomAppBar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mainActivity=((MainActivity)context);
         setNavigationIcon(R.drawable.ic_launcher_foreground);
         setNavigationOnClickListener(new OnClickListener() {
             @Override
