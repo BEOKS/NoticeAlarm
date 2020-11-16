@@ -1,20 +1,16 @@
 package com.example.noticealarm;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
+import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.lang.reflect.Array;
+import java.security.AccessControlContext;
 import java.util.ArrayList;
 //TODO 카테고리 다이얼로그 상세화
 
@@ -32,6 +28,9 @@ public class CategoryBottomDialog extends BottomSheetDialog {
     private TrashButton trashButton;
     private ArrayList<String> categoryArrayList;
     public  MainActivity mainActivity;
+    public  URLDeleteActivity urlDeleteActivity;
+    public  CategoryBottomDialog categoryBottomDialog;
+    public  Context mContext;
 
     public CategoryBottomDialog(@NonNull Context context, MainActivity mainActivity1) {
         super(context);
@@ -59,6 +58,15 @@ public class CategoryBottomDialog extends BottomSheetDialog {
         addNewCategoryButton.mainActivity=mainActivity;
         trashButton=(TrashButton)findViewById(R.id.trashButton);
         trashButton.mainActivity=mainActivity;
+    }
+
+
+
+    public void startDeleteActivity(){       //URL삭제 버튼을 누를경우 실행될 수 있도록 따로 메소드를 만들어 놓았습니다
+
+        Intent intent = new Intent(this.mainActivity,URLDeleteActivity.class);
+        intent.putExtra("categoryName", selectedCategoryname);
+        this.mainActivity.startActivity(intent);
     }
 
     public CategoryBottomDialog(@NonNull Context context, int theme) {
