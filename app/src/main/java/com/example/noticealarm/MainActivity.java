@@ -4,6 +4,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +32,16 @@ public class MainActivity extends AppCompatActivity {
         init();
         mainActivity=this;
 
+        //test
+        Intent intent = new Intent(getApplicationContext(),URLDeleteActivity.class);
+        intent.putExtra("categoryName", "모든 카테고리");
+        startActivity(intent);
+        //
+
+        // Intent intent_ = new Intent(this,URLDeleteActivity.class);
+        // startActivity(intent_);
+
+        //임시로 MainActivity에서 Intent 송신을 해주었습니다
 
     }
     private LinearLayout linearLayout;
