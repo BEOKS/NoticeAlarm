@@ -23,6 +23,7 @@ import static java.security.AccessController.getContext;
  * 2. 각 삭제 버튼을 클릭하면 해당 urlName에 대해서 URLData.removeURL(String urlName)을 호출함
  */
 
+
 public class URLDeleteActivity extends AppCompatActivity {
 
     ArrayList<Data> data;
