@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * 2. DatashowTabLayout.setCategory(String categoryName)를 호출
  */
 public class CategoryBottomDialog extends BottomSheetDialog {
-    public String selectedCategoryname="모든 카테고";
+    public String selectedCategoryname="모든 카테고리";
     private LinearLayout categoryLinearLayout;
     private AddNewCategoryButton addNewCategoryButton;
     private TrashButton trashButton;
