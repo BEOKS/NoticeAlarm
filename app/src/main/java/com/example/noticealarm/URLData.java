@@ -203,11 +203,6 @@ public class URLData {
                     arrayList.add(data);
                }
           }
-          arrayList.add(new Data("item 1"));
-          arrayList.add(new Data("item 2"));
-          arrayList.add(new Data("item 3"));
-          arrayList.add(new Data("item 4"));
-          arrayList.add(new Data("item 5"));
           return arrayList;
      }
 }

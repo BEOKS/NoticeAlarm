@@ -39,7 +39,7 @@ public class URLDeleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_u_r_l_delete);  /*activity_u_r_l_delete 레이아웃을 불러옵니다*/
 
         ListView listView = (ListView)findViewById(R.id.listView);
-        final URLDeleteAdapter urlDeleteAdapter = new URLDeleteAdapter(this,data);
+        URLDeleteAdapter urlDeleteAdapter = new URLDeleteAdapter(this,data);
         listView.setAdapter(urlDeleteAdapter);   /*리스트뷰와 어뎁터를 연결시키고 화면에 출력합니다*/
     }
 
@@ -47,7 +47,6 @@ public class URLDeleteActivity extends AppCompatActivity {
 
         Intent intents = getIntent();
         categoryName = intents.getExtras().getString("categoryName");  /* 인텐트로 categoryName을 불러옵니다 */
-        data = new ArrayList<Data>();
         data = URLData.getURLinCategory(categoryName);          /* getURLinCategory를 통해 불러온 CategoryName과
                                                                    비교하여 URLName을 data에 추가합니다*/
         System.out.println("1");

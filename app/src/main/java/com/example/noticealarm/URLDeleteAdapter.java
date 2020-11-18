@@ -47,19 +47,20 @@ public class URLDeleteAdapter extends BaseAdapter {
         View view = mLayoutInflater.inflate(R.layout.temp_layout, null);
 
         URLDataName = (TextView) view.findViewById(R.id.URLName);
-        URLDataName.setText(mData.get(position).getUrlName());
+        URLDataName.setText(mData.get(position).urlName);
         button=(Button)view.findViewById(R.id.URLtrashButtonIcon);
+        final String string=URLDataName.getText().toString();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle(URLDataName.getText().toString() + "를(을) 삭제 하시겠습니까?");
+                builder.setTitle(string + "를(을) 삭제 하시겠습니까?");
 
                 builder.setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                URLData.removeURL(URLDataName.getText().toString());         //쓰레기통 버튼 누를경우 remove URL 호출해
+                                URLData.removeURL(string);         //쓰레기통 버튼 누를경우 remove URL 호출해
                                 //리스트뷰의 URLData를 삭제합니다
                             }
                         });
