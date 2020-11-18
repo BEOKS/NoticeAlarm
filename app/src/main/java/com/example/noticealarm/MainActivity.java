@@ -32,12 +32,6 @@ public class MainActivity extends AppCompatActivity {
         init();
         mainActivity=this;
 
-        //test
-        Intent intent = new Intent(getApplicationContext(),URLDeleteActivity.class);
-        intent.putExtra("categoryName", "모든 카테고리");
-        startActivity(intent);
-        //
-
         // Intent intent_ = new Intent(this,URLDeleteActivity.class);
         // startActivity(intent_);
 
