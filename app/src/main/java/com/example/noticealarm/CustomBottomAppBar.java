@@ -50,7 +50,7 @@ public class CustomBottomAppBar extends BottomAppBar {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(mainActivity,URLDeleteActivity.class);
-                intent.putExtra("category",mainActivity.categoryNameTextView.getText().toString());
+                intent.putExtra("categoryName",mainActivity.categoryNameTextView.getText().toString());
                 urlDeleteActivity.startActivity(intent);
             }
         });
