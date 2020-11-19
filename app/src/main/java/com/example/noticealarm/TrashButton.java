@@ -19,12 +19,11 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
     MainActivity mainActivity;
     public TrashButton(Context context, AttributeSet attr) {
         super(context,attr);
-        mainActivity=((MainActivity)context);
         setOnClickListener(this);
     }
     public TrashButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mainActivity=((MainActivity)context);
+        setOnClickListener(this);
     }
 
     @Override

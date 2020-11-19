@@ -23,7 +23,6 @@ public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatBut
     MainActivity mainActivity;
     public AddNewCategoryButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mainActivity=((MainActivity)context);
         setOnClickListener(this);
     }
     private int a=1;

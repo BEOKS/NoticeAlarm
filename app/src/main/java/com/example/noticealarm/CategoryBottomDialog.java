@@ -32,9 +32,9 @@ public class CategoryBottomDialog extends BottomSheetDialog {
     public  CategoryBottomDialog categoryBottomDialog;
     public  Context mContext;
 
-    public CategoryBottomDialog(@NonNull Context context, final MainActivity mainActivity1) {
-        super(context);
-        mainActivity=((MainActivity)context);
+    public CategoryBottomDialog(@NonNull Context context) {
+        super((MainActivity)context);
+        mainActivity=(MainActivity)context;
         categoryArrayList=URLData.categoryNameList;
         setContentView(R.layout.bottom_sheet_dialog_layout);
         categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
