@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * 2. DatashowTabLayout.setCategory(String categoryName)를 호출
  */
 public class CategoryBottomDialog extends BottomSheetDialog {
-    public String selectedCategoryname="모든 카테고리";
+    public String selectedCategoryname="모든 공지사항";
     private LinearLayout categoryLinearLayout;
     private AddNewCategoryButton addNewCategoryButton;
     private TrashButton trashButton;
@@ -59,6 +59,28 @@ public class CategoryBottomDialog extends BottomSheetDialog {
         addNewCategoryButton.mainActivity=mainActivity;
         trashButton=(TrashButton)findViewById(R.id.trashButton);
         trashButton.mainActivity=mainActivity;
+
+        URLData.addDataChangeListener(new URLData.DataChangeListener() {
+            @Override
+            public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
+                categoryLinearLayout.removeAllViews();
+                for(String category : categoryNameList){
+                    TextView textView=new TextView(mainActivity);
+                    textView.setText(category);
+                    final String copy=category;
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            selectedCategoryname=copy;
+                            mainActivity.dataShowViewPager.setData(selectedCategoryname);
+                            mainActivity.dataShowViewPager.categoryName=selectedCategoryname;
+                            mainActivity.categoryNameTextView.setText(selectedCategoryname);
+                        }
+                    });
+                    categoryLinearLayout.addView(textView);
+                }
+            }
+        });
     }
 
 

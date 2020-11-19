@@ -11,7 +11,7 @@
         android:id="@+id/categoryNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="모든 카테고리"
+        android:text="모든 공지사항"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.example.noticealarm.DataShowViewPager

@@ -41,7 +41,7 @@ public class AddNewCategoryButton extends androidx.appcompat.widget.AppCompatBut
 
                         String CategoryName = EditCategoryName.getText().toString();
                         URLData.addNewCategory(CategoryName);
-
+                        
                     }
                 });
 

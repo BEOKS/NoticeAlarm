@@ -198,7 +198,7 @@ public class URLData {
      }
      public static ArrayList<Data> getURLinCategory(String categoryName) {
           ArrayList<Data> arrayList = new ArrayList<Data>();
-          if(categoryName.equals("")){
+          if(categoryName.equals("모든 공지사항")){
                for (Data data : urlDataList) {
                     arrayList.add(data);
                }

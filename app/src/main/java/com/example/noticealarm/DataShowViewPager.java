@@ -41,7 +41,7 @@ public class DataShowViewPager extends LinearLayout {
 
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        categoryName="";
+        categoryName="모든 공지사항";
         init(categoryName);
         URLData.addDataChangeListener(new URLData.DataChangeListener() {
             @Override
