@@ -1,15 +1,11 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 //TODO 카테고리 추가 버튼 상세화
 

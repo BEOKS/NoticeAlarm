@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.noticealarm.TrashButton
+    <com.notice.noticealarm.TrashButton
         android:id="@+id/trashButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.noticealarm.AddNewCategoryButton
+    <com.notice.noticealarm.AddNewCategoryButton
         android:id="@+id/addNewCategoryButton"
         android:layout_width="30dp"
         android:layout_height="30dp"

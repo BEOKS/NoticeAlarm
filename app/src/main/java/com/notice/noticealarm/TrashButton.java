@@ -1,11 +1,10 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /**

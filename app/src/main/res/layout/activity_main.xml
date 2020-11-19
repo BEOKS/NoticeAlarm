@@ -15,13 +15,13 @@
         android:textColor="@color/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <com.example.noticealarm.DataShowViewPager
+    <com.notice.noticealarm.DataShowViewPager
         android:id="@+id/viewPager"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.example.noticealarm.CustomBottomAppBar
+    <com.notice.noticealarm.CustomBottomAppBar
         android:id="@+id/customBottomAppBar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"

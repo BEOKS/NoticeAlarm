@@ -1,4 +1,4 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.content.Context;
 

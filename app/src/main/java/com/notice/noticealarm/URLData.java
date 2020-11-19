@@ -1,9 +1,8 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 //TODO 파이어 베이스와 연결 필
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.webkit.URLUtil;

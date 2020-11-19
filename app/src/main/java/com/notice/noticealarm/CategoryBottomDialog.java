@@ -1,4 +1,4 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.security.AccessControlContext;
 import java.util.ArrayList;
 //TODO 카테고리 다이얼로그 상세화
 

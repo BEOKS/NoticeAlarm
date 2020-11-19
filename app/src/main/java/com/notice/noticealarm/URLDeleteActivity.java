@@ -1,19 +1,15 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
 
 /**
  * 이건 제가 할게요!
