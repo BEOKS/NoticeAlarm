@@ -29,14 +29,8 @@ public class MainActivity extends AppCompatActivity {
         URLData.init(this);
         URLData.addNewCategory("모든 공지사항");
         setContentView(R.layout.activity_main);
-        init();
         mainActivity=this;
-
-        //test
-        Intent intent = new Intent(getApplicationContext(),URLDeleteActivity.class);
-        intent.putExtra("categoryName", "모든 카테고리");
-        startActivity(intent);
-        //
+        init();
 
         // Intent intent_ = new Intent(this,URLDeleteActivity.class);
         // startActivity(intent_);
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
-                linearLayout=new LinearLayout(getApplicationContext());
+                linearLayout=new LinearLayout(mainActivity);
                 getLayoutInflater().inflate(R.layout.add_new_url_dialog,linearLayout,true);
                 builder.setTitle("새로운 URL추가하기").setView(linearLayout);
 
