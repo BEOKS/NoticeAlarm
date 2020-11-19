@@ -3,6 +3,7 @@ package com.example.noticealarm;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,12 +36,16 @@ public class DataShowViewPager extends LinearLayout {
     public String categoryName;
     DataShowPagerAdapter dataShowPagerAdapter;
     ViewPager viewPager;
+    TextView initTextView;
+    MainActivity mainActivity;
     public DataShowViewPager(@NonNull Context context) {
         super(context);
+        mainActivity=(MainActivity)context;
     }
 
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mainActivity=(MainActivity)context;
         categoryName="모든 공지사항";
         init(categoryName);
         URLData.addDataChangeListener(new URLData.DataChangeListener() {
@@ -51,6 +56,12 @@ public class DataShowViewPager extends LinearLayout {
         });
     }
     public void init(String categoryName){
+        initTextView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.init_textview,null);
+        initTextView.setText("게시판의 URL을 추가하세요.");
+        addView(initTextView);
+        setGravity(Gravity.CENTER);
+        initTextView.setVisibility(GONE);
+
         this.categoryName=categoryName;
         tabLayout=null;
         //탭 레이아웃 세팅
@@ -67,12 +78,20 @@ public class DataShowViewPager extends LinearLayout {
     }
 
     public void setData(String categoryName){
+        if(URLData.getURLinCategory(categoryName).size()==0){
+            initTextView.setVisibility(VISIBLE);
+        }
+        else{
+            initTextView.setVisibility(GONE);
+        }
+
         removeView(viewPager);
         viewPager=new ViewPager(getContext());
         dataShowPagerAdapter.data=URLData.getURLinCategory(categoryName);
         dataShowPagerAdapter.notifyDataSetChanged();
         viewPager.setAdapter(dataShowPagerAdapter);
         addView(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
 class DataShowPagerAdapter extends PagerAdapter {

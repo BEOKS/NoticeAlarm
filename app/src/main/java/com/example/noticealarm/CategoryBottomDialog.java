@@ -39,7 +39,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
         setContentView(R.layout.bottom_sheet_dialog_layout);
         categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
         for(String category : categoryArrayList){
-            TextView textView=new TextView(context);
+            TextView textView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.category_text,null);
             textView.setText(category);
             final String copy=category;
             textView.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
             public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
                 categoryLinearLayout.removeAllViews();
                 for(String category : categoryNameList){
-                    TextView textView=new TextView(mainActivity);
+                    TextView textView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.category_text,null);
                     textView.setText(category);
                     final String copy=category;
                     textView.setOnClickListener(new View.OnClickListener() {

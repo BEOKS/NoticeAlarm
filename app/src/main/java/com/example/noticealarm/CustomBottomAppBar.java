@@ -33,7 +33,6 @@ public class CustomBottomAppBar extends BottomAppBar {
     public CustomBottomAppBar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mainActivity=((MainActivity)context);
-        setNavigationIcon(R.drawable.ic_launcher_foreground);
         setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +45,8 @@ public class CustomBottomAppBar extends BottomAppBar {
                 LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.END);
         Button button=new Button(context);
+        button.setBackground(getResources().getDrawable(R.drawable.trash1));
+        button.setLayoutParams(new ViewGroup.LayoutParams(80, 80));
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -118,6 +118,11 @@ public class URLData {
      }
      public static void removeCategory(String categoryName){
           categoryNameList.remove(categoryName);
+          for(int i=0;i<urlDataList.size();i++){
+               if(urlDataList.get(i).categoryName.equals(categoryName)){
+                    urlDataList.remove(i);
+               }
+          }
           onDataChanged();
      }
      public static final int URL_NOT_CORRECT=3;
@@ -192,6 +197,7 @@ public class URLData {
 
                          }
                     });
+                    break;
                }
           }
           onDataChanged();

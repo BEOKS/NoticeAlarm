@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         customBottomAppBar.mainActivity=this;
         dataShowViewPager=(DataShowViewPager)findViewById(R.id.viewPager);
         floatingActionButton=(FloatingActionButton)findViewById(R.id.floattingActionButton);
+        floatingActionButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

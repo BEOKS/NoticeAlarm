@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="모든 공지사항"
+        android:textColor="@color/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <com.example.noticealarm.DataShowViewPager
@@ -26,12 +27,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:backgroundTint="#fff"
+        app:navigationIcon="@drawable/menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floattingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/red_plus"
+        android:tint="#fff"
+        android:backgroundTint="@color/colorAccent"
         app:layout_anchor="@id/customBottomAppBar"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
