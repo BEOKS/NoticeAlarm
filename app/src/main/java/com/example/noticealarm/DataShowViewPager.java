@@ -67,8 +67,12 @@ public class DataShowViewPager extends LinearLayout {
     }
 
     public void setData(String categoryName){
+        removeView(viewPager);
+        viewPager=new ViewPager(getContext());
         dataShowPagerAdapter.data=URLData.getURLinCategory(categoryName);
         dataShowPagerAdapter.notifyDataSetChanged();
+        viewPager.setAdapter(dataShowPagerAdapter);
+        addView(viewPager);
     }
 }
 class DataShowPagerAdapter extends PagerAdapter {
