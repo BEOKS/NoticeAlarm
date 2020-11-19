@@ -32,7 +32,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
     public  CategoryBottomDialog categoryBottomDialog;
     public  Context mContext;
 
-    public CategoryBottomDialog(@NonNull Context context, MainActivity mainActivity1) {
+    public CategoryBottomDialog(@NonNull Context context, final MainActivity mainActivity1) {
         super(context);
         mainActivity=((MainActivity)context);
         categoryArrayList=URLData.categoryNameList;
@@ -47,6 +47,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
                 public void onClick(View v) {
                     selectedCategoryname=copy;
                     mainActivity.dataShowViewPager.setData(selectedCategoryname);
+                    mainActivity.dataShowViewPager.categoryName=selectedCategoryname;
                     mainActivity.categoryNameTextView.setText(selectedCategoryname);
                 }
             });

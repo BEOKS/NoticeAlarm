@@ -32,7 +32,9 @@ import java.util.ArrayList;
  */
 public class DataShowViewPager extends LinearLayout {
     private TabLayout tabLayout;
-    private String categoryName;
+    public String categoryName;
+    DataShowPagerAdapter dataShowPagerAdapter;
+    ViewPager viewPager;
     public DataShowViewPager(@NonNull Context context) {
         super(context);
     }
@@ -40,6 +42,7 @@ public class DataShowViewPager extends LinearLayout {
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         categoryName="";
+        init(categoryName);
         URLData.addDataChangeListener(new URLData.DataChangeListener() {
             @Override
             public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
@@ -47,23 +50,29 @@ public class DataShowViewPager extends LinearLayout {
             }
         });
     }
-    public void setData(String categoryName){
+    public void init(String categoryName){
         this.categoryName=categoryName;
+        tabLayout=null;
         //탭 레이아웃 세팅
         setOrientation(LinearLayout.VERTICAL);
         tabLayout=new TabLayout(getContext());
         tabLayout.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         addView(tabLayout);
 
-        ViewPager viewPager=new ViewPager(getContext());
-        DataShowPagerAdapter dataShowPagerAdapter=new DataShowPagerAdapter(categoryName);
+        viewPager=new ViewPager(getContext());
+        dataShowPagerAdapter=new DataShowPagerAdapter(categoryName);
         viewPager.setAdapter(dataShowPagerAdapter);
         addView(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
+
+    public void setData(String categoryName){
+        dataShowPagerAdapter.data=URLData.getURLinCategory(categoryName);
+        dataShowPagerAdapter.notifyDataSetChanged();
+    }
 }
 class DataShowPagerAdapter extends PagerAdapter {
-    private ArrayList<Data> data;
+    ArrayList<Data> data;
     public DataShowPagerAdapter(String category){
         data=URLData.getURLinCategory(category);
     }

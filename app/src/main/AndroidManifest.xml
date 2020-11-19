@@ -15,10 +15,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".URLDeleteActivity"></activity>
 
-        <service
-            android:name=".ServerConnect.ServerThread"
-            android:enabled="true"
-            android:exported="true" />
 
         <activity android:name=".MainActivity">
             <intent-filter>

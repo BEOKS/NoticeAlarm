@@ -100,6 +100,7 @@ public class URLData {
                dataChangeListener.onDataChange(urlDataList,categoryNameList);
           }
           updateDataToSharedPreference();
+          getDataFromSharedPreference();
      }
      public static final int ALREADY_EXIST=0,ADD_SUCCESS=1;
      /**
@@ -143,7 +144,10 @@ public class URLData {
                @Override
                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
-                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()+1);
+                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((Long)dataSnapshot.getValue()+1);
+                    }
+                    else{
+                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue(1);
                     }
                }
 
@@ -179,7 +183,7 @@ public class URLData {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                               if(dataSnapshot.exists()){
-                                   FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()-1);
+                                   FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((Long)dataSnapshot.getValue()-1);
                               }
                          }
 
@@ -188,19 +192,22 @@ public class URLData {
 
                          }
                     });
-                    return;
                }
           }
           onDataChanged();
      }
      public static ArrayList<Data> getURLinCategory(String categoryName) {
-          if(categoryName.equals("")){
-               return urlDataList;
-          }
           ArrayList<Data> arrayList = new ArrayList<Data>();
-          for (Data data : urlDataList) {
-               if (data.categoryName.equals(categoryName)) {
+          if(categoryName.equals("")){
+               for (Data data : urlDataList) {
                     arrayList.add(data);
+               }
+          }
+          else{
+               for (Data data : urlDataList) {
+                    if (data.categoryName.equals(categoryName)) {
+                         arrayList.add(data);
+                    }
                }
           }
           return arrayList;
@@ -243,7 +250,12 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
-               Toast.makeText(URLData.activity.getApplicationContext(),"인터넷에 연결할 수 없습니다",Toast.LENGTH_SHORT).show();
+               URLData.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(URLData.activity,"연결할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                    }
+               });
                e.printStackTrace();
 
           }
