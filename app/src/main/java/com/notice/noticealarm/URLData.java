@@ -109,6 +109,12 @@ public class URLData {
       */
      public static int addNewCategory(String categoryName){
           if(categoryNameList.indexOf(categoryName)!=-1){
+               activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(activity,"이미 존재하는 카테고리입니다.",Toast.LENGTH_SHORT).show();
+                    }
+               });
                return ALREADY_EXIST;
           }
           categoryNameList.add(categoryName);
@@ -137,10 +143,22 @@ public class URLData {
       */
      public static int addNewURL(String urlName, final String urlAddress, String categoryName){
           if(!URLUtil.isValidUrl(urlAddress)){
+               activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(activity,"올바른 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+               });
                return URL_NOT_CORRECT;
           }
           for(Data data:urlDataList){
-               if(data.urlName.equals(urlName)||data.urlAddress.equals("urlAddress")){
+               if(data.urlName.equals(urlName)||data.urlAddress.equals(urlAddress)){
+                    activity.runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+                              Toast.makeText(activity,"이미 존재하는 주소 또는 이름입니다.",Toast.LENGTH_SHORT).show();
+                         }
+                    });
                     return ALREADY_EXIST;
                }
           }
@@ -162,7 +180,17 @@ public class URLData {
           });
           Data data= null;
           try {
-               data = new Data(urlName,urlAddress,categoryName,new HtmlDataDownloader().execute(urlAddress).get());
+               String htmlData=new HtmlDataDownloader().execute(urlAddress).get();
+               if(htmlData==null){
+                    activity.runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+                              Toast.makeText(activity,"해당 주소에서 공지사항을 찾을 수 없습니다.",Toast.LENGTH_SHORT).show();
+                         }
+                    });
+                    return URL_NOT_CORRECT;
+               }
+               data = new Data(urlName,urlAddress,categoryName,htmlData);
           } catch (ExecutionException e) {
                e.printStackTrace();
           } catch (InterruptedException e) {
@@ -251,7 +279,12 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
                Document doc = Jsoup.connect(strings[0]).get();
                Elements contents = doc.getElementsByTag("table");
-               text = contents.toString();
+               if(contents.size()==0){
+                    text=null;
+               }
+               else{
+                    text = contents.get(0).toString();
+               }
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
