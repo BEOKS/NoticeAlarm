@@ -14,26 +14,35 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
         android:text="카테고리 목록"
+        android:textColor="@color/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.noticealarm.TrashButton
+    <com.notice.noticealarm.TrashButton
         android:id="@+id/trashButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="삭제"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/trash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.noticealarm.AddNewCategoryButton
+    <com.notice.noticealarm.AddNewCategoryButton
         android:id="@+id/addNewCategoryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="추가"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/red_plus"
         app:layout_constraintEnd_toStartOf="@+id/trashButton"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView

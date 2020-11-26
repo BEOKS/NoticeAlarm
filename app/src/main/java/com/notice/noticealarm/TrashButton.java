@@ -1,11 +1,11 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * 1. 쓰레기 버튼을 선택하면 삭제 다이얼로그가 실행됨
@@ -23,6 +23,7 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
     }
     public TrashButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setOnClickListener(this);
     }
 
     @Override
@@ -38,8 +39,18 @@ public class TrashButton extends androidx.appcompat.widget.AppCompatButton imple
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-                        URLData.removeCategory(SelCategoryName);
+                        if(SelCategoryName.equals("모든 공지사항")){
+                            mainActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mainActivity,"모든 공지사항은 삭제 할 수 없습니다",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else{
+                            URLData.removeCategory(SelCategoryName);
+                        }
 
                     }
                 });

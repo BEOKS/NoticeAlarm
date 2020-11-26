@@ -1,4 +1,4 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.security.AccessControlContext;
 import java.util.ArrayList;
 //TODO 카테고리 다이얼로그 상세화
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
  * 2. DatashowTabLayout.setCategory(String categoryName)를 호출
  */
 public class CategoryBottomDialog extends BottomSheetDialog {
-    public String selectedCategoryname="모든 카테고";
+    public String selectedCategoryname="모든 공지사항";
     private LinearLayout categoryLinearLayout;
     private AddNewCategoryButton addNewCategoryButton;
     private TrashButton trashButton;
@@ -32,14 +31,14 @@ public class CategoryBottomDialog extends BottomSheetDialog {
     public  CategoryBottomDialog categoryBottomDialog;
     public  Context mContext;
 
-    public CategoryBottomDialog(@NonNull Context context, MainActivity mainActivity1) {
-        super(context);
-        this.mainActivity=mainActivity1;
+    public CategoryBottomDialog(@NonNull Context context) {
+        super((MainActivity)context);
+        mainActivity=(MainActivity)context;
         categoryArrayList=URLData.categoryNameList;
         setContentView(R.layout.bottom_sheet_dialog_layout);
         categoryLinearLayout=(LinearLayout)findViewById(R.id.category_listView);
         for(String category : categoryArrayList){
-            TextView textView=new TextView(context);
+            TextView textView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.category_text,null);
             textView.setText(category);
             final String copy=category;
             textView.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +46,7 @@ public class CategoryBottomDialog extends BottomSheetDialog {
                 public void onClick(View v) {
                     selectedCategoryname=copy;
                     mainActivity.dataShowViewPager.setData(selectedCategoryname);
+                    mainActivity.dataShowViewPager.categoryName=selectedCategoryname;
                     mainActivity.categoryNameTextView.setText(selectedCategoryname);
                 }
             });
@@ -58,6 +58,28 @@ public class CategoryBottomDialog extends BottomSheetDialog {
         addNewCategoryButton.mainActivity=mainActivity;
         trashButton=(TrashButton)findViewById(R.id.trashButton);
         trashButton.mainActivity=mainActivity;
+
+        URLData.addDataChangeListener(new URLData.DataChangeListener() {
+            @Override
+            public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
+                categoryLinearLayout.removeAllViews();
+                for(String category : categoryNameList){
+                    TextView textView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.category_text,null);
+                    textView.setText(category);
+                    final String copy=category;
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            selectedCategoryname=copy;
+                            mainActivity.dataShowViewPager.setData(selectedCategoryname);
+                            mainActivity.dataShowViewPager.categoryName=selectedCategoryname;
+                            mainActivity.categoryNameTextView.setText(selectedCategoryname);
+                        }
+                    });
+                    categoryLinearLayout.addView(textView);
+                }
+            }
+        });
     }
 
 
@@ -71,10 +93,12 @@ public class CategoryBottomDialog extends BottomSheetDialog {
 
     public CategoryBottomDialog(@NonNull Context context, int theme) {
         super(context, theme);
+        mainActivity=((MainActivity)context);
     }
 
     protected CategoryBottomDialog(@NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+        mainActivity=((MainActivity)context);
     }
 }
 

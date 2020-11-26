@@ -1,16 +1,11 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,20 +18,15 @@ public class MainActivity extends AppCompatActivity {
     public FloatingActionButton floatingActionButton;
     public TextView categoryNameTextView;
     public MainActivity mainActivity;
+    SharedPreferences prefs = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         URLData.init(this);
-        URLData.addNewCategory("모든 공지사항");
         setContentView(R.layout.activity_main);
         init();
         mainActivity=this;
 
-        //test
-        Intent intent = new Intent(getApplicationContext(),URLDeleteActivity.class);
-        intent.putExtra("categoryName", "모든 카테고리");
-        startActivity(intent);
-        //
 
         // Intent intent_ = new Intent(this,URLDeleteActivity.class);
         // startActivity(intent_);
@@ -51,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         customBottomAppBar.mainActivity=this;
         dataShowViewPager=(DataShowViewPager)findViewById(R.id.viewPager);
         floatingActionButton=(FloatingActionButton)findViewById(R.id.floattingActionButton);
+        floatingActionButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,5 +71,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         categoryNameTextView=(TextView)findViewById(R.id.categoryNameTextView);
+        /**
+         * 최초 실행 시 안내문 생성
+         */
+        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            URLData.addNewCategory("모든 공지사항");
+            // using the following line to edit/commit prefs
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
     }
 }

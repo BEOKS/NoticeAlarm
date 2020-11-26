@@ -1,19 +1,15 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
 
 /**
  * 이건 제가 할게요!
@@ -39,15 +35,15 @@ public class URLDeleteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_u_r_l_delete);  /*activity_u_r_l_delete 레이아웃을 불러옵니다*/
 
         ListView listView = (ListView)findViewById(R.id.listView);
-        final URLDeleteAdapter urlDeleteAdapter = new URLDeleteAdapter(this,data);
+        URLDeleteAdapter urlDeleteAdapter = new URLDeleteAdapter(this,categoryName,listView);
         listView.setAdapter(urlDeleteAdapter);   /*리스트뷰와 어뎁터를 연결시키고 화면에 출력합니다*/
+
     }
 
     public void URLDataImit() {
 
         Intent intents = getIntent();
         categoryName = intents.getExtras().getString("categoryName");  /* 인텐트로 categoryName을 불러옵니다 */
-        data = new ArrayList<Data>();
         data = URLData.getURLinCategory(categoryName);          /* getURLinCategory를 통해 불러온 CategoryName과
                                                                    비교하여 URLName을 data에 추가합니다*/
         System.out.println("1");

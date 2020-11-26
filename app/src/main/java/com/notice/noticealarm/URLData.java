@@ -1,9 +1,8 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 //TODO 파이어 베이스와 연결 필
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.webkit.URLUtil;
@@ -100,6 +99,7 @@ public class URLData {
                dataChangeListener.onDataChange(urlDataList,categoryNameList);
           }
           updateDataToSharedPreference();
+          getDataFromSharedPreference();
      }
      public static final int ALREADY_EXIST=0,ADD_SUCCESS=1;
      /**
@@ -109,6 +109,12 @@ public class URLData {
       */
      public static int addNewCategory(String categoryName){
           if(categoryNameList.indexOf(categoryName)!=-1){
+               activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(activity,"이미 존재하는 카테고리입니다.",Toast.LENGTH_SHORT).show();
+                    }
+               });
                return ALREADY_EXIST;
           }
           categoryNameList.add(categoryName);
@@ -117,6 +123,11 @@ public class URLData {
      }
      public static void removeCategory(String categoryName){
           categoryNameList.remove(categoryName);
+          for(int i=0;i<urlDataList.size();i++){
+               if(urlDataList.get(i).categoryName.equals(categoryName)){
+                    urlDataList.remove(i);
+               }
+          }
           onDataChanged();
      }
      public static final int URL_NOT_CORRECT=3;
@@ -132,10 +143,22 @@ public class URLData {
       */
      public static int addNewURL(String urlName, final String urlAddress, String categoryName){
           if(!URLUtil.isValidUrl(urlAddress)){
+               activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(activity,"올바른 주소를 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+               });
                return URL_NOT_CORRECT;
           }
           for(Data data:urlDataList){
-               if(data.urlName.equals(urlName)||data.urlAddress.equals("urlAddress")){
+               if(data.urlName.equals(urlName)||data.urlAddress.equals(urlAddress)){
+                    activity.runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+                              Toast.makeText(activity,"이미 존재하는 주소 또는 이름입니다.",Toast.LENGTH_SHORT).show();
+                         }
+                    });
                     return ALREADY_EXIST;
                }
           }
@@ -143,7 +166,10 @@ public class URLData {
                @Override
                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
-                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()+1);
+                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((Long)dataSnapshot.getValue()+1);
+                    }
+                    else{
+                         FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue(1);
                     }
                }
 
@@ -154,7 +180,17 @@ public class URLData {
           });
           Data data= null;
           try {
-               data = new Data(urlName,urlAddress,categoryName,new HtmlDataDownloader().execute(urlAddress).get());
+               String htmlData=new HtmlDataDownloader().execute(urlAddress).get();
+               if(htmlData==null){
+                    activity.runOnUiThread(new Runnable() {
+                         @Override
+                         public void run() {
+                              Toast.makeText(activity,"해당 주소에서 공지사항을 찾을 수 없습니다.",Toast.LENGTH_SHORT).show();
+                         }
+                    });
+                    return URL_NOT_CORRECT;
+               }
+               data = new Data(urlName,urlAddress,categoryName,htmlData);
           } catch (ExecutionException e) {
                e.printStackTrace();
           } catch (InterruptedException e) {
@@ -179,7 +215,7 @@ public class URLData {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                               if(dataSnapshot.exists()){
-                                   FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((int)dataSnapshot.getValue()-1);
+                                   FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue((Long)dataSnapshot.getValue()-1);
                               }
                          }
 
@@ -188,26 +224,25 @@ public class URLData {
 
                          }
                     });
-                    return;
+                    break;
                }
           }
           onDataChanged();
      }
      public static ArrayList<Data> getURLinCategory(String categoryName) {
-          if(categoryName.equals("")){
-               return urlDataList;
-          }
           ArrayList<Data> arrayList = new ArrayList<Data>();
-          for (Data data : urlDataList) {
-               if (data.categoryName.equals(categoryName)) {
+          if(categoryName.equals("모든 공지사항")){
+               for (Data data : urlDataList) {
                     arrayList.add(data);
                }
           }
-          arrayList.add(new Data("item 1"));
-          arrayList.add(new Data("item 2"));
-          arrayList.add(new Data("item 3"));
-          arrayList.add(new Data("item 4"));
-          arrayList.add(new Data("item 5"));
+          else{
+               for (Data data : urlDataList) {
+                    if (data.categoryName.equals(categoryName)) {
+                         arrayList.add(data);
+                    }
+               }
+          }
           return arrayList;
      }
 }
@@ -244,11 +279,21 @@ class HtmlDataDownloader extends AsyncTask<String,Void,String> {
 
                Document doc = Jsoup.connect(strings[0]).get();
                Elements contents = doc.getElementsByTag("table");
-               text = contents.toString();
+               if(contents.size()==0){
+                    text=null;
+               }
+               else{
+                    text = contents.get(0).toString();
+               }
 
 
           } catch (IOException e) { //Jsoup의 connect 부분에서 IOException 오류가 날 수 있으므로 사용한다.
-               Toast.makeText(URLData.activity.getApplicationContext(),"인터넷에 연결할 수 없습니다",Toast.LENGTH_SHORT).show();
+               URLData.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                         Toast.makeText(URLData.activity,"연결할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                    }
+               });
                e.printStackTrace();
 
           }

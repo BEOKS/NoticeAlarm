@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:200735075499:android:adc58bd9d4857800c99bee",
         "android_client_info": {
-          "package_name": "com.example.noticealarm"
+          "package_name": "com.notice.noticealarm"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "200735075499-2igt6fe78h7vtri0mk7oj2m3csgf63sr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.noticealarm",
+            "package_name": "com.notice.noticealarm",
             "certificate_hash": "645ed837846902cc735dc5e0fa265d36add5a8a0"
           }
         },

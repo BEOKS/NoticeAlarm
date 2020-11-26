@@ -11,27 +11,33 @@
         android:id="@+id/categoryNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="모든 카테고리"
+        android:text="모든 공지사항"
+        android:textColor="@color/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <com.example.noticealarm.DataShowViewPager
+    <com.notice.noticealarm.DataShowViewPager
         android:id="@+id/viewPager"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
-    <com.example.noticealarm.CustomBottomAppBar
+    <com.notice.noticealarm.CustomBottomAppBar
         android:id="@+id/customBottomAppBar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:backgroundTint="#fff"
+        app:navigationIcon="@drawable/menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floattingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/red_plus"
+        android:tint="#fff"
+        android:backgroundTint="@color/colorAccent"
         app:layout_anchor="@id/customBottomAppBar"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

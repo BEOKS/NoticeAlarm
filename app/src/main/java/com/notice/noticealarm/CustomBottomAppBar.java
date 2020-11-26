@@ -1,16 +1,13 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,16 +24,16 @@ public class CustomBottomAppBar extends BottomAppBar {
     URLDeleteActivity urlDeleteActivity;
     public CustomBottomAppBar(@NonNull Context context) {
         super(context);
-
+        mainActivity=((MainActivity)context);
     }
 
     public CustomBottomAppBar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setNavigationIcon(R.drawable.ic_launcher_foreground);
+        mainActivity=((MainActivity)context);
         setNavigationOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryBottomDialog categoryBottomDialog=new CategoryBottomDialog(getContext(),mainActivity);
+                CategoryBottomDialog categoryBottomDialog=new CategoryBottomDialog(mainActivity);
                 categoryBottomDialog.show();
             }
         });
@@ -45,12 +42,14 @@ public class CustomBottomAppBar extends BottomAppBar {
                 LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.END);
         Button button=new Button(context);
+        button.setBackground(getResources().getDrawable(R.drawable.trash1));
+        button.setLayoutParams(new ViewGroup.LayoutParams(80, 80));
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(mainActivity,URLDeleteActivity.class);
-                intent.putExtra("category",mainActivity.categoryNameTextView.getText().toString());
-                urlDeleteActivity.startActivity(intent);
+                intent.putExtra("categoryName",mainActivity.categoryNameTextView.getText().toString());
+                mainActivity.startActivity(intent);
             }
         });
         linearLayout.addView(button);

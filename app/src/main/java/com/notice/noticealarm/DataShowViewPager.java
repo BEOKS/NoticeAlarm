@@ -1,8 +1,9 @@
-package com.example.noticealarm;
+package com.notice.noticealarm;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -31,14 +29,21 @@ import java.util.ArrayList;
  */
 public class DataShowViewPager extends LinearLayout {
     private TabLayout tabLayout;
-    private String categoryName;
+    public String categoryName;
+    DataShowPagerAdapter dataShowPagerAdapter;
+    ViewPager viewPager;
+    TextView initTextView;
+    MainActivity mainActivity;
     public DataShowViewPager(@NonNull Context context) {
         super(context);
+        mainActivity=(MainActivity)context;
     }
 
     public DataShowViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        categoryName="";
+        mainActivity=(MainActivity)context;
+        categoryName="모든 공지사항";
+        init(categoryName);
         URLData.addDataChangeListener(new URLData.DataChangeListener() {
             @Override
             public void onDataChange(ArrayList<Data> urlDataList, ArrayList<String> categoryNameList) {
@@ -46,23 +51,47 @@ public class DataShowViewPager extends LinearLayout {
             }
         });
     }
-    public void setData(String categoryName){
+    public void init(String categoryName){
+        initTextView=(TextView)mainActivity.getLayoutInflater().inflate(R.layout.init_textview,null);
+        initTextView.setText("게시판의 URL을 추가하세요.");
+        addView(initTextView);
+        setGravity(Gravity.CENTER);
+        initTextView.setVisibility(GONE);
+
         this.categoryName=categoryName;
+        tabLayout=null;
         //탭 레이아웃 세팅
         setOrientation(LinearLayout.VERTICAL);
         tabLayout=new TabLayout(getContext());
         tabLayout.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         addView(tabLayout);
 
-        ViewPager viewPager=new ViewPager(getContext());
-        DataShowPagerAdapter dataShowPagerAdapter=new DataShowPagerAdapter(categoryName);
+        viewPager=new ViewPager(getContext());
+        dataShowPagerAdapter=new DataShowPagerAdapter(categoryName);
+        viewPager.setAdapter(dataShowPagerAdapter);
+        addView(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void setData(String categoryName){
+        if(URLData.getURLinCategory(categoryName).size()==0){
+            initTextView.setVisibility(VISIBLE);
+        }
+        else{
+            initTextView.setVisibility(GONE);
+        }
+
+        removeView(viewPager);
+        viewPager=new ViewPager(getContext());
+        dataShowPagerAdapter.data=URLData.getURLinCategory(categoryName);
+        dataShowPagerAdapter.notifyDataSetChanged();
         viewPager.setAdapter(dataShowPagerAdapter);
         addView(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
 }
 class DataShowPagerAdapter extends PagerAdapter {
-    private ArrayList<Data> data;
+    ArrayList<Data> data;
     public DataShowPagerAdapter(String category){
         data=URLData.getURLinCategory(category);
     }
