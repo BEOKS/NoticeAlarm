@@ -40,4 +40,12 @@
         android:backgroundTint="@color/colorAccent"
         app:layout_anchor="@id/customBottomAppBar"
         />
+
+    <ImageButton
+        android:id="@+id/help_image_button"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_gravity="right"
+        android:layout_margin="8dp"
+        android:background="@drawable/help_icon" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

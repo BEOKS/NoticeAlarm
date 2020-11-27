@@ -2,10 +2,15 @@ package com.notice.noticealarm;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         URLData.init(this);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
         init();
         mainActivity=this;
 
@@ -33,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
         //임시로 MainActivity에서 Intent 송신을 해주었습니다
 
+    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "공지사항 채널";
+            String description = "공지사항 채널";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("공지사항 채널", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
     private LinearLayout linearLayout;
     public void init(){
@@ -75,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
          * 최초 실행 시 안내문 생성
          */
         prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+        ((ImageButton)findViewById(R.id.help_image_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),GuideActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     protected void onResume() {
@@ -82,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
-            URLData.addNewCategory("모든 공지사항");
+            Intent intent=new Intent(getApplicationContext(),GuideActivity.class);
+            startActivity(intent);
             // using the following line to edit/commit prefs
             prefs.edit().putBoolean("firstrun", false).commit();
         }

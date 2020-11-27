@@ -2,13 +2,17 @@ package com.notice.noticealarm;
 //TODO 파이어 베이스와 연결 필
 
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +56,22 @@ public class URLData {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                          try {
                               urlDataList.get(index).htmlData=new HtmlDataDownloader().execute(urlDataList.get(index).urlAddress).get();
+                              Long data=(Long) dataSnapshot.getValue();
+                              if(data<0){
+                                   //알림
+                                   Intent intent = new Intent(URLData.activity, MainActivity.class);
+                                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                   PendingIntent pendingIntent = PendingIntent.getActivity(URLData.activity, 0, intent, 0);
+                                   NotificationCompat.Builder builder = new NotificationCompat.Builder(URLData.activity, "공지사항 채널")
+                                           .setSmallIcon(R.drawable.app_icon)
+                                           .setContentTitle(urlDataList.get(index).urlName)
+                                           .setContentText("새로운 공지사항이 등록되었습니다!!")
+                                           .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                           .setContentIntent(pendingIntent)
+                                           .setAutoCancel(true);
+                                   NotificationManagerCompat notificationManager = NotificationManagerCompat.from(URLData.activity);
+                                   notificationManager.notify('1', builder.build());
+                              }
                               URLData.onDataChanged();
                          }
                          catch (ExecutionException e) {
@@ -141,7 +161,7 @@ public class URLData {
       * @param urlAddress
       * @param categoryName
       */
-     public static int addNewURL(String urlName, final String urlAddress, String categoryName){
+     public static int addNewURL(final String urlName, final String urlAddress, String categoryName){
           if(!URLUtil.isValidUrl(urlAddress)){
                activity.runOnUiThread(new Runnable() {
                     @Override
@@ -170,6 +190,34 @@ public class URLData {
                     }
                     else{
                          FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).setValue(1);
+                    }
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError databaseError) {
+
+               }
+          });
+          FirebaseDatabase.getInstance().getReference(Data.parseURLtoDatabaseKey(urlAddress)).addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Long data=(Long)dataSnapshot.getValue();
+                    if(data<0){
+                         //알림
+                         Intent intent = new Intent(URLData.activity, MainActivity.class);
+                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                         PendingIntent pendingIntent = PendingIntent.getActivity(URLData.activity, 0, intent, 0);
+                         NotificationCompat.Builder builder = new NotificationCompat.Builder(URLData.activity, "공지사항 채널")
+                                 .setSmallIcon(R.drawable.app_icon)
+                                 .setContentTitle(urlName)
+                                 .setContentText("새로운 공지사항이 등록되었습니다!")
+                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                 .setContentIntent(pendingIntent)
+                                 .setAutoCancel(true);
+                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(URLData.activity);
+                         notificationManager.notify('1', builder.build());
+
+
                     }
                }
 

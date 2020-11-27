@@ -53,6 +53,7 @@ public class CustomBottomAppBar extends BottomAppBar {
             }
         });
         linearLayout.addView(button);
+        linearLayout.setPadding(12,12,12,12);
         addView(linearLayout);
     }
 
