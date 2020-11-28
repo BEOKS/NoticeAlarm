@@ -13,7 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GuideActivity"></activity>
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".GuideActivity" />
         <activity android:name=".URLDeleteActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

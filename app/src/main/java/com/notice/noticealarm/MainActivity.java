@@ -32,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         init();
         mainActivity=this;
+        Intent intent=new Intent(this,NotificationService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }
+        else{
+            startService(intent);
+        }
 
 
         // Intent intent_ = new Intent(this,URLDeleteActivity.class);
