@@ -32,13 +32,6 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         init();
         mainActivity=this;
-        Intent intent=new Intent(this,NotificationService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        }
-        else{
-            startService(intent);
-        }
 
 
         // Intent intent_ = new Intent(this,URLDeleteActivity.class);
@@ -118,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             Intent intent=new Intent(getApplicationContext(),GuideActivity.class);
+             URLData.addNewCategory("모든 공지사항");
             startActivity(intent);
             // using the following line to edit/commit prefs
             prefs.edit().putBoolean("firstrun", false).commit();
